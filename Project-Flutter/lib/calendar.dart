@@ -192,8 +192,8 @@ class _CalendarDateState extends State<CalendarDate> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(3),
               height: MediaQuery.of(context).size.height * 0.6,
               decoration: BoxDecoration(
                 color: Colors.white70,
@@ -278,12 +278,12 @@ class _CalendarDateState extends State<CalendarDate> {
       height: 60,
       decoration: BoxDecoration(
         color: Colors.deepPurple,
-        //borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.deepPurple, width: 1),
+        borderRadius: BorderRadius.circular(30),
+        //border: Border.all(color: Colors.deepPurple, width: 1),
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.deepPurple.withOpacity(0.7),
+          //color: Colors.deepPurple.withOpacity(0.7),
           borderRadius: BorderRadius.circular(70),
         ),
         child: Center(

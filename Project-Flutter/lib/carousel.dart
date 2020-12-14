@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {
   //Constructor grejjjs
-  Carousel({this.inputWidgets});
+  Carousel({this.photos, this.inputWidgets});
   //widget.minvar
   final List<Widget> inputWidgets;
+  final List<String> photos;
+
+
   @override
   _CarouselState createState() => _CarouselState();
 }
@@ -13,12 +16,15 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   int photoIndex = 0;
 
-  List<String> photos = [
+
+ // List<String> photos;
+
+  /*= [
     'assets/images/image1.jpeg',
     'assets/images/image2.jpeg',
     'assets/images/image3.jpeg'
 
-  ];
+  ]*/
 
 
   void _getWidget() {
@@ -28,10 +34,10 @@ class _CarouselState extends State<Carousel> {
 
   String getNextImageIndex() {
     String statement;
-    if(photoIndex != photos.length -1){
-      statement = photos[photoIndex +1];
+    if(photoIndex != widget.photos.length -1){
+      statement = widget.photos[photoIndex +1];
     }else
-      statement = photos[photoIndex];
+      statement = widget.photos[photoIndex];
 
     return statement;
   }
@@ -39,9 +45,9 @@ class _CarouselState extends State<Carousel> {
   String getPrevImageIndex() {
     String statement;
     if(photoIndex != 0){
-      statement = photos[photoIndex - 1];
+      statement = widget.photos[photoIndex - 1];
     }else
-      statement = photos[photoIndex];
+      statement = widget.photos[photoIndex];
 
     return statement;
   }
@@ -54,7 +60,7 @@ class _CarouselState extends State<Carousel> {
 
   void _nextImage() {
     setState(() {
-      photoIndex = photoIndex < photos.length - 1 ? photoIndex + 1 : photoIndex;
+      photoIndex = photoIndex < widget.photos.length - 1 ? photoIndex + 1 : photoIndex;
     });
   }
 
@@ -97,11 +103,11 @@ class _CarouselState extends State<Carousel> {
 
                   // Main image
                   Container(
-
+                    padding: EdgeInsets.all(3),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         image: DecorationImage(
-                            image: AssetImage(photos[photoIndex]),
+                            image: AssetImage(widget.photos[photoIndex]),
                             fit: BoxFit.cover)),
 
                     height: 500.0, //400
@@ -112,7 +118,7 @@ class _CarouselState extends State<Carousel> {
 
                   // Next page
                   //turn operator to not show last image
-                  photoIndex != photos.length-1 ?
+                  photoIndex != widget.photos.length-1 ?
                   Center(
                       child: ClipRect(
                         child: Align(
@@ -171,17 +177,18 @@ class _CarouselState extends State<Carousel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
-                  child: Text('Prev'),
+                  child: Text('Prev', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                   onPressed: _previousImage,
                   elevation: 5.0,
-                  color: Colors.lightBlueAccent,
+                  color: Color(0xff79a3b1),
+
                 ),
                 SizedBox(width: 10.0),
                 RaisedButton(
-                  child: Text('Next'),
+                  child: Text('Next',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
                   onPressed: _nextImage,
                   elevation: 5.0,
-                  color: Colors.lightBlueAccent,
+                  color: Color(0xff79a3b1),
                 ),
               ],
             )

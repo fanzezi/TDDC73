@@ -19,17 +19,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.cyan.withOpacity(0.5),
+      appBar: AppBar(
+        backgroundColor: Color(0xff79a3b1),
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("Miniproject"),
+      ),
+      backgroundColor: Color(0xffd0e8f2),
       body: Container(
         margin: EdgeInsets.only(top: 50),
         child:
-          Carousel(inputWidgets: [CalendarDate(),Text("Hello there"),
+          Carousel(
+              photos: [
+                'assets/images/image1.jpeg',
+                'assets/images/image2.jpeg',
+                'assets/images/image3.jpeg',
+              ],
+
+              inputWidgets: [
+            // Widget 1
+            CalendarDate(),
+            //Widget 2
+                Container(
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
+                  color: Colors.white70,
+                  child: Text("Hello there"),),
+            //Widget 3
             Container(
-              color: Colors.red,
-            width: 50,height: 50,)
+
+              padding: EdgeInsets.all(20),
+              child: Image(image: AssetImage('assets/images/dog.jpeg')))
           ]),
       ),
     );
   }
 }
 
+/*Container(
+              margin: EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
+              color: Colors.white70,
+              child: Text("Hello there"),), */
