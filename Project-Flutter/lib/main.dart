@@ -55,9 +55,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/*Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(20),
-              color: Colors.white70,
-              child: Text("Hello there"),), */

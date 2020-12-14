@@ -17,19 +17,16 @@ class _CarouselState extends State<Carousel> {
   int photoIndex = 0;
 
 
- // List<String> photos;
+  Widget _getWidget() {
+    // If user forget to add an image The next widget will not be displayed
+    int photoLen = widget.photos.length;
+    if( widget.inputWidgets[photoIndex] == null && photoIndex > photoLen ){
+      return Container();
+    }
+    else {
+      return widget.inputWidgets[photoIndex];
+    }
 
-  /*= [
-    'assets/images/image1.jpeg',
-    'assets/images/image2.jpeg',
-    'assets/images/image3.jpeg'
-
-  ]*/
-
-
-  void _getWidget() {
-
-    //if widget index get right widget
   }
 
   String getNextImageIndex() {
@@ -108,11 +105,12 @@ class _CarouselState extends State<Carousel> {
                         borderRadius: BorderRadius.circular(25.0),
                         image: DecorationImage(
                             image: AssetImage(widget.photos[photoIndex]),
-                            fit: BoxFit.cover)),
-
-                    height: 500.0, //400
+                            fit: BoxFit.cover)
+                    ),
+                    height: 450.0, //400
                     width: 300.0,
-                    child: widget.inputWidgets[photoIndex],//300
+                    child: _getWidget(),
+                    //child: widget.inputWidgets[photoIndex],//300
                   ),
 
 
@@ -145,31 +143,6 @@ class _CarouselState extends State<Carousel> {
                     height: 400.0,
                     width:50,
                   ),
-
-                /*
-                  Positioned(
-                    top: 375.0,
-                    left: 25.0,
-                    right: 25.0,
-                    child: SelectedPhoto(numberOfDots: photos.length, photoIndex: photoIndex),
-                  ), */
-                  /*Container(
-
-                    height: 400,
-                    width: 100,
-                    child: GestureDetector(
-                      onTap: _previousImage,
-                    ),
-                  ),
-                  Container(
-
-                    height: 400,
-                    width: 100,
-                    //margin: EdgeInsets.only(left: 20),
-                    child: GestureDetector(
-                      onTap: _nextImage,
-                    ),
-                  ),*/
                 ],
               ),
             ),

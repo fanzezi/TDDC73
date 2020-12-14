@@ -309,8 +309,8 @@ class _CalendarDateState extends State<CalendarDate> {
       padding: EdgeInsets.zero,
       itemCount: _seqDates.length + 7,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 25,
+        mainAxisSpacing: 15,
+        crossAxisSpacing: 20,
         crossAxisCount: 7, //show 7 days in a row
 
       ),
