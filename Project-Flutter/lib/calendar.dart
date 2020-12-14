@@ -186,14 +186,14 @@ class _CalendarDateState extends State<CalendarDate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: Colors.white10,
       body: Center(
         child: Column(
           children: [
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.all(16),
-              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
               height: MediaQuery.of(context).size.height * 0.6,
               decoration: BoxDecoration(
                 color: Colors.white70,
@@ -228,7 +228,7 @@ class _CalendarDateState extends State<CalendarDate> {
   //get weekdays
   Widget _weekDayTitle(int index) {
     return Center(
-      child: Text(_weekDays[index], style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 17, fontWeight: FontWeight.bold),),
+      child: Text(_weekDays[index], style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 14, fontWeight: FontWeight.bold),),
     );
   }
 
@@ -274,12 +274,12 @@ class _CalendarDateState extends State<CalendarDate> {
   //date selector
   Widget _selector(CalendarDate calendarDate) {
     return Container(
-      width: 40,
-      height: 40,
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         color: Colors.deepPurple,
-        borderRadius: BorderRadius.circular(70),
-        border: Border.all(color: Colors.deepPurple, width: 3),
+        //borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.deepPurple, width: 1),
       ),
       child: Container(
         decoration: BoxDecoration(

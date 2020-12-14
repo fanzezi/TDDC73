@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 
-class carousel extends StatefulWidget {
+class Carousel extends StatefulWidget {
   //Constructor grejjjs
+  Carousel({this.inputWidgets});
   //widget.minvar
+  final List<Widget> inputWidgets;
   @override
-  _carouselState createState() => _carouselState();
+  _CarouselState createState() => _CarouselState();
 }
 
-class _carouselState extends State<carousel> {
+class _CarouselState extends State<Carousel> {
   int photoIndex = 0;
 
   List<String> photos = [
@@ -17,6 +19,12 @@ class _carouselState extends State<carousel> {
     'assets/images/image3.jpeg'
 
   ];
+
+
+  void _getWidget() {
+
+    //if widget index get right widget
+  }
 
   String getNextImageIndex() {
     String statement;
@@ -95,8 +103,10 @@ class _carouselState extends State<carousel> {
                         image: DecorationImage(
                             image: AssetImage(photos[photoIndex]),
                             fit: BoxFit.cover)),
-                    height: 400.0, //400
-                    width: 300.0, //300
+
+                    height: 500.0, //400
+                    width: 300.0,
+                    child: widget.inputWidgets[photoIndex],//300
                   ),
 
 

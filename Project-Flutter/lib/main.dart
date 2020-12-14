@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar.dart';
 import 'package:flutter_app/carousel.dart';
 
+import 'calendar.dart';
+import 'calendar.dart';
 import 'carousel.dart';
 
 void main() {
@@ -17,20 +19,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
-      body: carousel(),
+      //backgroundColor: Colors.cyan.withOpacity(0.5),
+      body: Container(
+        margin: EdgeInsets.only(top: 50),
+        child:
+          Carousel(inputWidgets: [CalendarDate(),Text("Hello there"),
+            Container(
+              color: Colors.red,
+            width: 50,height: 50,)
+          ]),
+      ),
     );
   }
 }
 
-
-/*return MaterialApp(
-      title: 'Project',
-
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        backgroundColor: Colors.white,
-      ),
-      home: //CalendarDate(),
-      carousel(),
-    ); */
