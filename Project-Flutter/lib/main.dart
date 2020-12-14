@@ -38,7 +38,16 @@ class MyApp extends StatelessWidget {
 
               inputWidgets: [
             // Widget 1
-            CalendarDate(),
+            CalendarDate(
+		themeColor: _themeColor,
+              	dateColor: _dateColor,
+              	sundayColor: _sundayColor,
+              	//choose to start week on monday or sunday
+              	startWeek: StartWeek.monday,
+		//choose time range for calendar 
+              	startYear: DateTime(2020, 1),
+              	endYear: DateTime(2021, 12),	
+	    ),
             //Widget 2
                 Container(
                   margin: EdgeInsets.all(20),
