@@ -12,9 +12,9 @@ class _carouselState extends State<carousel> {
   int photoIndex = 0;
 
   List<String> photos = [
-    'assets/image1.jpeg',
-    'assets/image2.jpeg',
-    'assets/image3.jpeg'
+    'assets/images/image1.jpeg',
+    'assets/images/image2.jpeg',
+    'assets/images/image3.jpeg'
 
   ];
 
