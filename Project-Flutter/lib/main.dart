@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar.dart';
 import 'package:flutter_app/carousel.dart';
+//For the time
+
 
 import 'calendar.dart';
 import 'calendar.dart';
@@ -11,11 +13,11 @@ void main() {
     title: "Project",
     home: MyApp())
   );
-
 }
 
 class MyApp extends StatelessWidget {
   //This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,23 +36,34 @@ class MyApp extends StatelessWidget {
                 'assets/images/image1.jpeg',
                 'assets/images/image2.jpeg',
                 'assets/images/image3.jpeg',
+                //'assets/images/image5.jpg',
               ],
 
               inputWidgets: [
-            // Widget 1
-            CalendarDate(),
-            //Widget 2
+              // Widget 1
+                CalendarDate(),
+              //Widget 2
                 Container(
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(20),
-                  color: Colors.white70,
-                  child: Text("Hello there"),),
-            //Widget 3
-            Container(
+                    alignment: Alignment.topCenter,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
+                    color: Colors.white70,
+                    child: Text("Insert text", style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold, color: Colors.black54),),
+                  ),
+              //Widget 3
+                Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(children: [
+                    Image(image: AssetImage('assets/images/dog.jpeg')),
 
-              padding: EdgeInsets.all(20),
-              child: Image(image: AssetImage('assets/images/dog.jpeg')))
-          ]),
+                      Container(
+                          padding: EdgeInsets.all(20),
+                          child: Text("yo")),
+                    ],),
+                ),
+
+
+              ]),
       ),
     );
   }

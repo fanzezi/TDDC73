@@ -20,7 +20,7 @@ class _CarouselState extends State<Carousel> {
   Widget _getWidget() {
     // If user forget to add an image The next widget will not be displayed
     int photoLen = widget.photos.length;
-    if( widget.inputWidgets[photoIndex] == null && photoIndex > photoLen ){
+    if( widget.inputWidgets[photoIndex] == null && (photoIndex > photoLen  || photoIndex < photoLen)){
       return Container();
     }
     else {

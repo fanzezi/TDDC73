@@ -192,9 +192,9 @@ class _CalendarDateState extends State<CalendarDate> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(3),
-              height: MediaQuery.of(context).size.height * 0.6,
+              margin: EdgeInsets.all(15),
+              padding: EdgeInsets.all(5),
+              height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(15),
@@ -309,8 +309,8 @@ class _CalendarDateState extends State<CalendarDate> {
       padding: EdgeInsets.zero,
       itemCount: _seqDates.length + 7,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 15,
-        crossAxisSpacing: 20,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 15,
         crossAxisCount: 7, //show 7 days in a row
 
       ),
