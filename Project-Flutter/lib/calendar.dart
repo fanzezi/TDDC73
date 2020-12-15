@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum StartWeek { monday } //kan vara överflödig
+enum StartWeek { monday, sunday } //kan vara överflödig
 
 class CalendarDate extends StatefulWidget{
   CalendarDate({
@@ -8,13 +8,25 @@ class CalendarDate extends StatefulWidget{
     this.date,
     this.thisMonth = false,
     this.prevMonth = false,
-    this.nextMonth = false
+    this.nextMonth = false,
+    this.themeColor,
+    this.dateColor,
+    this.sundayColor,
+    this.startWeek,
+    this.startYear,
+    this.endYear,
   }) : super(key: key);
 
   final DateTime date;
   final bool thisMonth;
   final bool prevMonth;
   final bool nextMonth;
+  final Color themeColor;
+  final Color dateColor;
+  final Color sundayColor;
+  final StartWeek startWeek;
+  final DateTime startYear;
+  final DateTime endYear;
 
   @override
   _CalendarDateState createState() => _CalendarDateState();
@@ -28,7 +40,8 @@ class _CalendarDateState extends State<CalendarDate> {
   List<CalendarDate> _seqDates; //create list for adding dates
 
   //lists of days names and month names in the app
-  final List<String> _weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  final List<String> _weekDaysMon = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  final List<String> _weekDaysSun = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   final List<String> _monthNames = [
     'JANUARY', 'FEBRUARY', 'MARCH',
     'APRIL', 'MAY', 'JUNE',
@@ -58,7 +71,7 @@ class _CalendarDateState extends State<CalendarDate> {
   //calculate all the days of a month in a year with their occurrence in weekdays
   //get month, value between 1-12
   //list of type calendar date
-  List<CalendarDate> getMonth(int month, int year, {StartWeek startWeek = StartWeek.monday}) {
+  List<CalendarDate> getMonth(int month,  int year, { StartWeek startWeek = StartWeek.monday} ) {
 
     //validate
     if(year == null || month == null || month < 1 || month > 12) throw ArgumentError('Invalid year or month');
@@ -88,7 +101,8 @@ class _CalendarDateState extends State<CalendarDate> {
     }
 
     //fill days from prev month
-    if(startWeek == StartWeek.monday && calendarDate.first.date.weekday != DateTime.monday) {
+    if(startWeek == StartWeek.monday && calendarDate.first.date.weekday != DateTime.monday ||
+        startWeek == StartWeek.sunday && calendarDate.first.date.weekday != DateTime.sunday) {
 
       //if the current month is jan, previous month is december of previous year
       if(month == DateTime.january){
@@ -103,7 +117,7 @@ class _CalendarDateState extends State<CalendarDate> {
       numOfDays = _daysMonth[otherMonth -1];
       if(_leapYear(otherYear) && otherMonth == DateTime.february) numOfDays++;
 
-      leftDays = numOfDays - calendarDate.first.date.weekday + 1;
+      leftDays = numOfDays - calendarDate.first.date.weekday + ((startWeek == StartWeek.sunday) ? 1 : 0);
 
       for(int i = numOfDays; i>leftDays; i--){
         //add days to start of list to maintain the sequence
@@ -115,7 +129,8 @@ class _CalendarDateState extends State<CalendarDate> {
     }
 
     //fill with days from next month
-    if(startWeek == StartWeek.monday && calendarDate.last.date.weekday != DateTime.sunday) {
+    if(startWeek == StartWeek.monday && calendarDate.last.date.weekday != DateTime.sunday ||
+        startWeek == StartWeek.sunday && calendarDate.last.date.weekday != DateTime.saturday) {
 
       //month is dec, next month is january next year
       if(month == DateTime.december){
@@ -130,7 +145,7 @@ class _CalendarDateState extends State<CalendarDate> {
       numOfDays = _daysMonth[otherMonth-1];
       if(_leapYear(otherYear) && otherMonth == DateTime.february) numOfDays++;
 
-      leftDays = 7 - calendarDate.last.date.weekday;
+      leftDays = 7 - calendarDate.last.date.weekday - ((startWeek == StartWeek.monday) ? 0:1);
       if(leftDays == -1) leftDays = 6;
 
       for(int i = 0; i<leftDays; i++){
@@ -158,7 +173,7 @@ class _CalendarDateState extends State<CalendarDate> {
 
   //get current month
   void _getCalendar() {
-    _seqDates = getMonth(_currentDateTime.month, _currentDateTime.year, startWeek: StartWeek.monday);
+    _seqDates = getMonth(_currentDateTime.month, _currentDateTime.year, startWeek : widget.startWeek);
   }
 
   //previous month
@@ -228,7 +243,10 @@ class _CalendarDateState extends State<CalendarDate> {
   //get weekdays
   Widget _weekDayTitle(int index) {
     return Center(
-      child: Text(_weekDays[index], style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 14, fontWeight: FontWeight.bold),),
+      child: Text((widget.startWeek == StartWeek.monday) ?
+        _weekDaysMon[index] : _weekDaysSun[index],
+        style: TextStyle(color: widget.themeColor, fontSize: 17, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -238,11 +256,11 @@ class _CalendarDateState extends State<CalendarDate> {
       onTap: () { //when a date is clicked on
 
         if(_selectedDateTime != calendarDate.date){
-          if(calendarDate.nextMonth){
+          if(calendarDate.nextMonth && _currentDateTime.isBefore(widget.endYear)){
             //show the view for next month when a date from
             //that month is selected in current view
             _getNextMonth();
-          } else if(calendarDate.prevMonth){
+          } else if(calendarDate.prevMonth && _currentDateTime.isAfter(widget.startYear)){
             //show the view for prev month when a date from
             //that month is selected in current view
             _getPrevMonth();
@@ -263,8 +281,8 @@ class _CalendarDateState extends State<CalendarDate> {
           '${calendarDate.date.day}',
           style: TextStyle(
             color: (calendarDate.thisMonth) //current month
-                ? (calendarDate.date.weekday == DateTime.sunday) ? Colors.deepPurpleAccent : Colors.black //purple when it is sunday, black for the rest
-                : (calendarDate.date.weekday == DateTime.sunday) ? Colors.deepPurpleAccent.withOpacity(0.5) : Colors.black.withOpacity(0.5), //lower opacity for days not in the current month
+                ? (calendarDate.date.weekday == DateTime.sunday) ? widget.sundayColor : widget.dateColor
+                : (calendarDate.date.weekday == DateTime.sunday) ? widget.sundayColor.withOpacity(0.5) : widget.dateColor.withOpacity(0.5), //lower opacity for days not in the current month
           ),
         ),
       ),
@@ -277,13 +295,13 @@ class _CalendarDateState extends State<CalendarDate> {
       width: 60,
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.deepPurple,
+        color: widget.themeColor,
         borderRadius: BorderRadius.circular(30),
-        //border: Border.all(color: Colors.deepPurple, width: 1),
+        //border: Border.all(color: widget.themeColor, width: 1),
       ),
       child: Container(
         decoration: BoxDecoration(
-          //color: Colors.deepPurple.withOpacity(0.7),
+          //color: widget.themeColor.withOpacity(0.7),
           borderRadius: BorderRadius.circular(70),
         ),
         child: Center(
@@ -329,7 +347,7 @@ class _CalendarDateState extends State<CalendarDate> {
       children: [
         Row(
           children: [
-            _btn(false),
+            if(_currentDateTime.isAfter(widget.startYear)) _btn(false),
             //month and year
             Expanded(
               child: Center(
@@ -341,7 +359,7 @@ class _CalendarDateState extends State<CalendarDate> {
               ),
             ),
             //next month button
-            _btn(true)
+            if(_currentDateTime.isBefore(widget.endYear)) _btn(true)
           ],
         ),
         SizedBox(height: 10),

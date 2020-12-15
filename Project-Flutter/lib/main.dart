@@ -3,16 +3,12 @@ import 'package:flutter_app/calendar.dart';
 import 'package:flutter_app/carousel.dart';
 //For the time
 
-
 import 'calendar.dart';
 import 'calendar.dart';
 import 'carousel.dart';
 
 void main() {
-  runApp(MaterialApp(
-    title: "Project",
-    home: MyApp())
-  );
+  runApp(MaterialApp(title: "Project", home: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,40 +26,34 @@ class MyApp extends StatelessWidget {
       backgroundColor: Color(0xffd0e8f2),
       body: Container(
         margin: EdgeInsets.only(top: 50),
-        child:
-          Carousel(
-              photos: [
-                'assets/images/image1.jpeg',
-                'assets/images/image2.jpeg',
-                'assets/images/image3.jpeg',
-                //'assets/images/image5.jpg',
+        child: Carousel(photos: [
+          'assets/images/image1.jpeg',
+          'assets/images/image2.jpeg',
+          'assets/images/image3.jpeg',
+          //'assets/images/image5.jpg',
+        ], inputWidgets: [
+          // Widget 1
+          CalendarDate(
+            themeColor: Colors.red,//_themeColor,
+            dateColor: Colors.red, //_dateColor,
+            sundayColor: Colors.red,// _sundayColor,
+            //choose to start week on monday or sunday
+            startWeek: StartWeek.monday,
+            //choose time range for calendar
+            startYear: DateTime(2020, 1),
+            endYear: DateTime(2021, 12),
+          ),
+          //Widget 2
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Image(image: AssetImage('assets/images/dog.jpeg')),
+                Container(padding: EdgeInsets.all(20), child: Text("yo")),
               ],
-
-              inputWidgets: [
-              // Widget 1
-                CalendarDate(),
-              //Widget 2
-                Container(
-                    alignment: Alignment.topCenter,
-                    margin: EdgeInsets.all(20),
-                    padding: EdgeInsets.all(20),
-                    color: Colors.white70,
-                    child: Text("Insert text", style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold, color: Colors.black54),),
-                  ),
-              //Widget 3
-                Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(children: [
-                    Image(image: AssetImage('assets/images/dog.jpeg')),
-
-                      Container(
-                          padding: EdgeInsets.all(20),
-                          child: Text("yo")),
-                    ],),
-                ),
-
-
-              ]),
+            ),
+          ),
+        ]),
       ),
     );
   }
