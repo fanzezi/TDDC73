@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 
 class Carousel extends StatefulWidget {
-  //Constructor grejjjs
-  Carousel({this.photos, this.inputWidgets});
-  //widget.minvar
-  final List<Widget> inputWidgets;
-  final List<String> photos;
+  //Constructor for carousel class
+  Carousel({this.inputPhotos, this.inputWidgets});
 
+  final List<Widget> inputWidgets;
+  final List<String> inputPhotos;
 
   @override
   _CarouselState createState() => _CarouselState();
@@ -16,62 +15,65 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   int photoIndex = 0;
 
-
+  //Get the input widget
   Widget _getWidget() {
-    // If user forget to add an image The next widget will not be displayed
-    int photoLen = widget.photos.length;
+    int photoLen = widget.inputPhotos.length;
+
+    // If user forget to add an image to a widget the next widget will not be displayed
     if( widget.inputWidgets[photoIndex] == null && (photoIndex > photoLen  || photoIndex < photoLen)){
       return Container();
     }
     else {
+      // else return the current widget
       return widget.inputWidgets[photoIndex];
     }
-
   }
 
+  //Get the next image
   String getNextImageIndex() {
     String statement;
-    if(photoIndex != widget.photos.length -1){
-      statement = widget.photos[photoIndex +1];
+    if(photoIndex != widget.inputPhotos.length -1){
+      statement = widget.inputPhotos[photoIndex +1];
     }else
-      statement = widget.photos[photoIndex];
-
+      statement = widget.inputPhotos[photoIndex];
     return statement;
   }
 
+  //Get the previous image
   String getPrevImageIndex() {
     String statement;
     if(photoIndex != 0){
-      statement = widget.photos[photoIndex - 1];
+      statement = widget.inputPhotos[photoIndex - 1];
     }else
-      statement = widget.photos[photoIndex];
-
+      statement = widget.inputPhotos[photoIndex];
     return statement;
   }
 
   void _previousImage() {
+    //Set state to get previous photoindex when press the Prev button
     setState(() {
       photoIndex = photoIndex > 0 ? photoIndex - 1 : 0;
     });
   }
 
+
   void _nextImage() {
+    //Set state to get next photoindex when press the Next button
     setState(() {
-      photoIndex = photoIndex < widget.photos.length - 1 ? photoIndex + 1 : photoIndex;
+      photoIndex = photoIndex < widget.inputPhotos.length - 1 ? photoIndex + 1 : photoIndex;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
 
-                  // Previous image
+                  // Show previous image
                   photoIndex != 0 ?
                   Center(
                       child: ClipRect(
@@ -79,10 +81,8 @@ class _CarouselState extends State<Carousel> {
                           alignment: Alignment.topCenter,
                           widthFactor: 0.5,
                           child: Container(
-
                             margin: EdgeInsets.only(right: 10),
                             decoration: BoxDecoration(
-
                                 borderRadius: BorderRadius.circular(15.0),
                                 image: DecorationImage(
                                     image: AssetImage(getPrevImageIndex()),
@@ -94,7 +94,7 @@ class _CarouselState extends State<Carousel> {
                         ),
                       )
                   )
-
+                  // If first image, show no previous image (with turn operator)
                       : Container(height: 400.0,
                     width:50,),
 
@@ -104,29 +104,25 @@ class _CarouselState extends State<Carousel> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         image: DecorationImage(
-                            image: AssetImage(widget.photos[photoIndex]),
-                            fit: BoxFit.cover)
-                    ),
-                    height: 450.0, //400
+                            image: AssetImage(widget.inputPhotos[photoIndex]),
+                            fit: BoxFit.cover
+                          ),
+                        ),
+                    height: 450.0,
                     width: 300.0,
                     child: _getWidget(),
-                    //child: widget.inputWidgets[photoIndex],//300
                   ),
 
-
-                  // Next page
-                  //turn operator to not show last image
-                  photoIndex != widget.photos.length-1 ?
+                  // Show next image
+                  photoIndex != widget.inputPhotos.length-1 ?
                   Center(
                       child: ClipRect(
                         child: Align(
                           alignment: Alignment.topCenter,
                           widthFactor: 0.5,
                           child: Container(
-
                             margin: EdgeInsets.only(left: 10),
                             decoration: BoxDecoration(
-
                             borderRadius: BorderRadius.circular(25),
                             image: DecorationImage(
                               image: AssetImage(getNextImageIndex()),
@@ -139,6 +135,7 @@ class _CarouselState extends State<Carousel> {
                       )
                   )
 
+                  // If last image, show no next image (with turn operator)
                    : Container(
                     height: 400.0,
                     width:50,
@@ -146,6 +143,7 @@ class _CarouselState extends State<Carousel> {
                 ],
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -170,75 +168,3 @@ class _CarouselState extends State<Carousel> {
   }
 }
 
-
-
-class SelectedPhoto extends StatelessWidget {
-
-  final int numberOfDots;
-  final int photoIndex;
-
-  SelectedPhoto({this.numberOfDots, this.photoIndex});
-
-  Widget _inactivePhoto() {
-    return new Container(
-
-        child: new Padding(
-          padding: const EdgeInsets.only(left: 3.0, right: 3.0),
-          child: Container(
-            height: 8.0,
-            width: 8.0,
-            decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(4.0)
-            ),
-          ),
-        )
-    );
-  }
-
-  Widget _activePhoto() {
-    return Container(
-
-      child: Padding(
-        padding: EdgeInsets.only(left: 3.0, right: 3.0),
-        child: Container(
-          height: 10.0,
-          width: 10.0,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey,
-                    spreadRadius: 0.0,
-                    blurRadius: 2.0
-                )
-              ]
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildDots() {
-    List<Widget> dots = [];
-
-    for(int i = 0; i< numberOfDots; ++i) {
-      dots.add(
-          i == photoIndex ? _activePhoto(): _inactivePhoto()
-      );
-    }
-    return dots;
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return new Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: _buildDots(),
-      ),
-    );
-  }
-}

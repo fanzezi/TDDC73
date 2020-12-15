@@ -12,7 +12,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  //This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +25,43 @@ class MyApp extends StatelessWidget {
       backgroundColor: Color(0xffd0e8f2),
       body: Container(
         margin: EdgeInsets.only(top: 50),
-        child: Carousel(photos: [
-          'assets/images/image1.jpeg',
-          'assets/images/image2.jpeg',
-          'assets/images/image3.jpeg',
-          //'assets/images/image5.jpg',
+        child: Carousel(
+            inputPhotos: [
+              'assets/images/image1.jpeg',
+              'assets/images/image2.jpeg',
+              'assets/images/image3.jpeg',
+              //'assets/images/image5.jpg',
+
         ], inputWidgets: [
-          // Widget 1
+          // Widget 1 for Carousel
           CalendarDate(
-            themeColor: Colors.red,//_themeColor,
-            dateColor: Colors.red, //_dateColor,
-            sundayColor: Colors.red,// _sundayColor,
+            themeColor: Colors.grey,//_themeColor,
+            dateColor: Colors.black, //_dateColor,
+            sundayColor: Colors.grey,// _sundayColor,
             //choose to start week on monday or sunday
             startWeek: StartWeek.monday,
             //choose time range for calendar
             startYear: DateTime(2020, 1),
             endYear: DateTime(2021, 12),
           ),
-          //Widget 2
+
+          //Widget 2 for Carousel
           Container(
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
                 Image(image: AssetImage('assets/images/dog.jpeg')),
                 Container(padding: EdgeInsets.all(20), child: Text("yo")),
+              ],
+            ),
+          ),
+
+          //Widget 3 for Carousel
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Image(image: AssetImage('assets/images/grapes.jpg')),
               ],
             ),
           ),
